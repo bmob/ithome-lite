@@ -41,9 +41,9 @@ export default {
   onPullDownRefresh () {
     this.refresh()
   },
-  // onReachBottom () {
-  //   this.loadmore()
-  // },
+  onReachBottom () {
+    // this.loadmore()
+  },
   methods: {
     ...mapActions([
       'getSlides',
@@ -55,10 +55,10 @@ export default {
         this.getSlides()
       ])
       wx.stopPullDownRefresh()
+    },
+    loadmore () {
+      // this.getNewsList()
     }
-    // loadmore () {
-    //   this.getNewsList()
-    // }
   }
 }
 </script>

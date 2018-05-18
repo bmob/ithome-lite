@@ -27,15 +27,12 @@ const store = new Vuex.Store({
     async getSlides ({ commit }) {
       const slides = await api.getSlides()
       if (!slides) return
-      const parsedSlides = xml2json(slides).rss.channel.item
-      const filtedSlides = parsedSlides.filter(
-        slide => slide.opentype['#text'] === '1'
-      )
-      const formatedSlides = filtedSlides.map(formatSlideList)
-      commit('slides', formatedSlides)
+      console.log(slides)
+      commit('slides', slides)
     },
     async getNewsList ({ state, commit }, init) {
       const news = await api.getNewsList()
+      console.log(news)
       if (!news) return
       const formatedNews = news.newslist.map(formatNewsList)
       if (init) {

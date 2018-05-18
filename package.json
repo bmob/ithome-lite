@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "flyio": "^0.5.7",
+    "hydrogen-js-sdk": "^1.4.1",
     "mpvue": "^1.0.11",
     "mpvue-router-patch": "^0.1.5",
     "vuex": "^3.0.1",
