@@ -23,7 +23,7 @@ export default {
       backgroundColor: '#d22222',
       backgroundColorTop: '#d22222',
       navigationBarBackgroundColor: '#d22222',
-      navigationBarTitleText: 'IT之家Lite',
+      navigationBarTitleText: 'IT之家-Bmob后端云版',
       navigationBarTextStyle: 'white'
     },
     tabBar: {

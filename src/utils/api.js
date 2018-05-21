@@ -13,19 +13,36 @@ const api = {
     return new Promise((resolve, reject) => {
       const query = Bmob.Query('newslist')
       query.find().then(res => {
-        resolve({'newslist': res})
+        resolve({ 'newslist': res })
       }).catch(err => {
         reject(err)
       })
     })
   },
-  getNews: (id) => request.get(`/xml/newscontent/${id}.xml`, null, {
-    baseURL: baseUrlApi
-  }),
-  getRelatedNews: (id) => request.get(`/json/tags/0${id.slice(0, 3)}/${id}.json`, null, {
-    baseURL: baseUrlApi,
-    parseJson: false
-  }),
+
+  getNews: (id) => {
+    if (!id) return
+    return new Promise((resolve, reject) => {
+      const query = Bmob.Query('newscontent')
+      query.get(id).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getRelatedNews: (id) => {
+    return new Promise((resolve, reject) => {
+      const query = Bmob.Query('newslist')
+      // query.equalTo('related', '==', '1')
+      query.limit(5)
+      query.find().then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
   getNewsComments: (id) => request.get(`/json/commentlist/350/87a8e5b144d81938.json`, null, {
     baseURL: baseUrlDyn
   }),
@@ -46,8 +63,8 @@ const api = {
     visistCount: '',
     pageLength: ''
   }, {
-    baseURL: baseUrlQuan
-  }),
+      baseURL: baseUrlQuan
+    }),
   getTopic: (id) => request.get(`/api/post/${id}`, null, {
     baseURL: baseUrlQuan
   }),
@@ -55,8 +72,8 @@ const api = {
     postid: id,
     replyidlessthan: last
   }, {
-    baseURL: baseUrlQuan
-  })
+      baseURL: baseUrlQuan
+    })
 }
 
 export default api

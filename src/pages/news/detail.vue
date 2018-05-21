@@ -36,6 +36,7 @@ export default {
   async mounted () {
     Object.assign(this.$data, this.$options.data())
     this.id = this.$route.query.id
+    this.objectId = this.$route.query.objectId
     this.title = this.$route.query.title
     await Promise.all([
       this.getNews(),
@@ -59,26 +60,24 @@ export default {
       })
     },
     async getNews () {
-      let { id } = this
-      id = `${id.slice(0, 3)}/${id.slice(3, 6)}`
-      const news = await api.getNews(id)
+      let { objectId } = this
+      const news = await api.getNews(objectId)
       if (!news) return
-      const parsedNews = xml2json(news).rss.channel.item
       this.news = {
-        newssource: parsedNews.newssource['#text'],
-        detail: parsedNews.detail['#text'].replace(/<img/g, '<img width="100%"'),
-        newsauthor: parsedNews.newsauthor['#text']
+        newssource: news.newssource,
+        detail: news.detail.replace(/<img/g, '<img width="100%"'),
+        newsauthor: news.newsauthor
       }
     },
     async getRelatedNews () {
       const newslist = await api.getRelatedNews(this.id)
       if (!newslist) return
-      const parsedNews = JSON.parse(newslist.replace('var tag_jsonp =', ''))
-      this.relatedNews = parsedNews.slice(0, 3).map(news => {
+
+      this.relatedNews = newslist.map(news => {
         return {
-          title: news.newstitle,
-          image: news.img,
-          link: `/pages/news/detail?id=${news.newsid}&title=${news.newstitle}`,
+          title: news.title,
+          image: news.image,
+          link: `/pages/news/detail?id=${news.newsid}&objectId=${news.nid}&title=${news.title}`,
           postdate: news.postdate
         }
       })
@@ -88,7 +87,7 @@ export default {
 </script>
 
 <style lang="less">
-@import url("~@/styles/index.less");
+@import url('~@/styles/index.less');
 
 .header {
   display: flex;

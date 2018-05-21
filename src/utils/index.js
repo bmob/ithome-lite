@@ -31,7 +31,7 @@ export function formatSlideList (slide) {
 }
 
 export function formatNewsList (news) {
-  const { newsid, title, postdate, commentcount, lapinid, image } = news
+  const { nid, newsid, title, postdate, commentcount, lapinid, image } = news
   return {
     id: newsid,
     title,
@@ -39,7 +39,7 @@ export function formatNewsList (news) {
     commentcount,
     lapinid,
     image,
-    link: `/pages/news/detail?id=${newsid}&title=${title}`
+    link: `/pages/news/detail?id=${newsid}&objectId=${nid}&title=${title}`
   }
 }
 
